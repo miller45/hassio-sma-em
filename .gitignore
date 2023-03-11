@@ -127,5 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-# pycharm (jetbrains) config
 .idea
+sma-em/options.json
