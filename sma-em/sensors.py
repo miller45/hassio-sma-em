@@ -199,6 +199,7 @@ def startup():
     """Read the hassos configuration."""
     ofile = Path("/data/options.json")
     if fs.exists("./options.json"):
+        print("using local ./options.json")
         ofile = Path("./options.json")
     options = (
         loads(ofile.read_text())
