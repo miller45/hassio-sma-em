@@ -136,9 +136,11 @@ def hass_device_class(*, unit: str):
         "kVA": "power",
         "V": "voltage",
         "Hz": None,
+        "VAr": "reactive_power"
     }.get(
         unit, "energy"
     )  # kwh, kVa,
+
 
 
 async def hass_discover_sensor(*, sma_id: str, sensor: SWSensor):
