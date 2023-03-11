@@ -4,6 +4,7 @@ import logging
 import statistics
 import sys
 import time
+import os
 from json import dumps, loads
 from pathlib import Path
 from typing import Any, Dict, Sequence
@@ -198,7 +199,7 @@ def get_sensors(*, definition: str, emparts: dict):
 def startup():
     """Read the hassos configuration."""
     ofile = Path("/data/options.json")
-    if fs.exists("./options.json"):
+    if os.path.exists("./options.json"):
         print("using local ./options.json")
         ofile = Path("./options.json")
     options = (
