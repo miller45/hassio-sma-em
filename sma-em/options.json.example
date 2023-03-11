@@ -1,0 +1,11 @@
+{
+    "MQTT_HOST": "192.168.x.x",
+    "MQTT_PORT": 1883,
+    "MQTT_USERNAME": "",
+    "MQTT_PASSWORD": "",
+    "SMA_SERIALS": [],
+    "FIELDS": ["pconsume","pconsumecounter","pconsumecounter:max","psupply","psupply:max","u1","qconsume","sconsume","psupplycounter","psupplycounter:max","cosphi"],
+    "THRESHOLD": 80,
+    "RECONNECT_INTERVAL": 86400,
+    "DEBUG": 0
+}
