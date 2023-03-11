@@ -196,6 +196,8 @@ def get_sensors(*, definition: str, emparts: dict):
 def startup():
     """Read the hassos configuration."""
     ofile = Path("/data/options.json")
+    if fs.exists("./options.json"):
+        ofile = Path("./options.json")
     options = (
         loads(ofile.read_text())
         if ofile.exists()
