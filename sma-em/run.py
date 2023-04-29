@@ -47,8 +47,11 @@ def connect_socket():
 
 async def main():
     sensors.startup()
+    level = logging.DEBUG if sensors.OPTIONS["DEBUG"] != 0 else logging.INFO
+    if 'LOGLEVEL' in sensors.OPTIONS:
+        level = sensors.OPTIONS['LOGLEVEL']
     logging.basicConfig(
-        level=logging.DEBUG if sensors.OPTIONS["DEBUG"] != 0 else logging.INFO
+        level=level
     )
 
     LOOP = asyncio.get_event_loop()
