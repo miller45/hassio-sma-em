@@ -8,6 +8,7 @@ import os
 from json import dumps, loads
 from pathlib import Path
 from typing import Any, Dict, Sequence
+import posixpath
 
 import attr
 from icecream import ic
@@ -40,8 +41,6 @@ class SWSensor:
 
 SENSORS: Dict[str, Sequence[SWSensor]] = {}
 OPTIONS: Dict[str, Any] = {}
-_MQTT = MQTTClient()
-
 
 MQTT_HOST = "MQTT_HOST"
 MQTT_PORT = "MQTT_PORT"
@@ -55,6 +54,10 @@ RECONNECT_INTERVAL = "RECONNECT_INTERVAL"
 AUTODISCOVER_CONFIG = "AUTODISCOVER_CONFIG"
 
 SMA_EM_TOPIC = "SMA-EM/status"
+LWT_TOPIC = posixpath.join(SMA_EM_TOPIC, "LWT")
+
+_MQTT = MQTTClient(LWT_TOPIC)
+
 
 
 async def mqtt_publish(topic: str, payload: Any, retain: bool = False):
@@ -150,6 +153,9 @@ async def hass_discover_sensor(*, sma_id: str, sensor: SWSensor):
         "name": sensor.id,
         "dev_cla": sensor.device_class,
         "stat_t": f"{SMA_EM_TOPIC}/{sma_id}/{sensor.id}",
+        "avty_t": f"{LWT_TOPIC}",
+        "pl_avail": "Online",
+        "pl_not_avail": "Offline",
         "unit_of_meas": sensor.unit,
         "uniq_id": f"{sma_id}_{sensor.id}",
         # "state_class": "measurement",

@@ -9,8 +9,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class MQTTClient:
-    def __init__(self) -> None:
+    def __init__(self, lwttopic) -> None:
         self._client = Client()
+        self._lwttopic = lwttopic
 
         def on_connect(client, userdata, flags, rc, properties=None):
             msg = {
@@ -22,8 +23,11 @@ class MQTTClient:
                 5: "refused - not authorised",
             }.get(rc, f"refused - {rc}")
             _LOGGER.info("MQTT: Connection %s", msg)
+            if rc == 0:
+                self._client.publish(self._lwttopic, payload="Online", qos=0, retain=True)
 
         self._client.on_connect = on_connect
+        self._client.will_set(self._lwttopic, payload="Offline", qos=0, retain=True)
 
     async def connect(self, host, port, username, password):
         """Connect."""
